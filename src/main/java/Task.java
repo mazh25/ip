@@ -11,4 +11,9 @@ public class Task {
     public void setIsDone() {
         this.isDone = true;
     }
+    public String toString() {
+        String status = this.isDone ? "X" : " ";
+        return "[" + status + "] " + this.taskDescription;
+    }
 }
+

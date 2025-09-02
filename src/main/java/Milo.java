@@ -20,6 +20,12 @@ public class Milo {
                 markTask(command);
             } else if (command.startsWith("unmark")) {
                 unmarkTask(command);
+            } else if (command.startsWith("todo")) {
+                todoTask(command);
+            } else if (command.startsWith("deadline")) {
+                deadlineTask(command);
+            } else if (command.startsWith("event")) {
+                eventTask(command);
             } else {
                 addTask(command);
             }
@@ -44,7 +50,7 @@ public class Milo {
         System.out.println("Here are the tasks in your list:");
         for (int i = 0; i < count; i++) {
             String status = tasks[i].isDone ? "X" : " ";
-            System.out.println("  " + (i + 1) + ".[" + status + "] " + tasks[i].taskDescription);
+            System.out.println("  " + (i + 1) + "." + tasks[i].toString());
         }
         System.out.println("  ____________________________________________________________");
     }
@@ -73,6 +79,56 @@ public class Milo {
         tasks[count++] = new Task(command);
         System.out.println("  ____________________________________________________________");
         System.out.println("  added: " + command);
+        System.out.println("  ____________________________________________________________");
+    }
+
+    private static void todoTask(String command) {
+        String content = command.substring(5).trim();
+        tasks[count++] = new ToDos(content);
+        System.out.println("  ____________________________________________________________");
+        System.out.println(" Got it. I've added this task:");
+        System.out.println("   " + tasks[count-1].toString());
+        System.out.println(" Now you have "  + count + " tasks in the list.");
+        System.out.println("  ____________________________________________________________");
+    }
+
+    private static void deadlineTask(String command) {
+        String content = command.substring(9).trim();
+        String[] parts = content.split("/by", 2);
+        if (parts.length < 2) {
+            System.out.println("  Please provide a /by date for the deadline!");
+            return;
+        }
+        String description = parts[0].trim();
+        String by = parts[1].trim();
+        tasks[count++] = new Deadline(description, by);
+        System.out.println("  ____________________________________________________________");
+        System.out.println(" Got it. I've added this task:");
+        System.out.println("   " + tasks[count - 1].toString());
+        System.out.println(" Now you have " + count + " tasks in the list.");
+        System.out.println("  ____________________________________________________________");
+    }
+
+    private static void eventTask(String command) {
+        String content = command.substring(6).trim();
+        String[] parts = content.split("/from", 2);
+        if(parts.length < 2) {
+            System.out.println("  Please provide a /from time for the event!");
+            return;
+        }
+        String description = parts[0].trim();
+        String[] timeParts = parts[1].split("/to", 2);
+        if(timeParts.length < 2) {
+            System.out.println("  Please provide a /to time for the event!");
+            return;
+        }
+        String from = timeParts[0].trim();
+        String to = timeParts[1].trim();
+        tasks[count++] = new Events(description, from, to);
+        System.out.println("  ____________________________________________________________");
+        System.out.println(" Got it. I've added this task:");
+        System.out.println("   " + tasks[count - 1].toString());
+        System.out.println(" Now you have " + count + " tasks in the list.");
         System.out.println("  ____________________________________________________________");
     }
 }
