@@ -65,23 +65,41 @@ public class Milo {
     }
 
     private static void markTask(String command) {
-        String[] parts = command.split(" ");
-        int index = Integer.parseInt(parts[1]) - 1;
-        tasks[index].isDone = true;
-        System.out.println("  ____________________________________________________________");
-        System.out.println("  Nice! I've marked this task as done:");
-        System.out.println("    [X] " + tasks[index].taskDescription);
-        System.out.println("  ____________________________________________________________");
+        try {
+            String[] parts = command.split(" ");
+            int index = Integer.parseInt(parts[1]) - 1;
+            if(index >= count) {
+                throw new IndexIllegalException(index);
+            }
+            tasks[index].isDone = true;
+            System.out.println("  ____________________________________________________________");
+            System.out.println("  Nice! I've marked this task as done:");
+            System.out.println("    [X] " + tasks[index].taskDescription);
+            System.out.println("  ____________________________________________________________");
+        } catch (MiloException e) {
+            System.out.println("    ____________________________________________________________");
+            System.out.println("     " + e.getMessage());
+            System.out.println("    ____________________________________________________________");
+        }
     }
 
     private static void unmarkTask(String command) {
-        String[] parts = command.split(" ");
-        int index = Integer.parseInt(parts[1]) - 1;
-        tasks[index].isDone = false;
-        System.out.println("  ____________________________________________________________");
-        System.out.println("  OK, I've marked this task as not done yet:");
-        System.out.println("    [ ] " + tasks[index].taskDescription);
-        System.out.println("  ____________________________________________________________");
+        try {
+            String[] parts = command.split(" ");
+            int index = Integer.parseInt(parts[1]) - 1;
+            if(index >= count) {
+                throw new IndexIllegalException(index);
+            }
+            tasks[index].isDone = false;
+            System.out.println("  ____________________________________________________________");
+            System.out.println("  OK, I've marked this task as not done yet:");
+            System.out.println("    [ ] " + tasks[index].taskDescription);
+            System.out.println("  ____________________________________________________________");
+        } catch (MiloException e) {
+            System.out.println("    ____________________________________________________________");
+            System.out.println("     " + e.getMessage());
+            System.out.println("    ____________________________________________________________");
+        }
     }
 
     private static void addTask(String command) {
