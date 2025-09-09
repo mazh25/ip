@@ -13,27 +13,36 @@ public class Milo {
     private static void run() {
         Scanner sc = new Scanner(System.in);
         String command = sc.nextLine().trim().toLowerCase();
+
         while (!command.equals("bye")) {
-            if (command.equals("list")) {
-                printList();
-            } else if (command.startsWith("mark")) {
-                markTask(command);
-            } else if (command.startsWith("unmark")) {
-                unmarkTask(command);
-            } else if (command.startsWith("todo")) {
-                todoTask(command);
-            } else if (command.startsWith("deadline")) {
-                deadlineTask(command);
-            } else if (command.startsWith("event")) {
-                eventTask(command);
-            } else {
-                addTask(command);
+            try {
+                if (command.equals("list")) {
+                    printList();
+                } else if (command.startsWith("mark")) {
+                    markTask(command);
+                } else if (command.startsWith("unmark")) {
+                    unmarkTask(command);
+                } else if (command.startsWith("todo")) {
+                    todoTask(command);
+                } else if (command.startsWith("deadline")) {
+                    deadlineTask(command);
+                } else if (command.startsWith("event")) {
+                    eventTask(command);
+                } else {
+                    throw new UnknownTaskException();
+                }
+            } catch (MiloException e) {
+                System.out.println("    ____________________________________________________________");
+                System.out.println("     " + e.getMessage());
+                System.out.println("    ____________________________________________________________");
             }
-            command = sc.nextLine();
+
+            command = sc.nextLine().trim().toLowerCase();
         }
 
         System.out.println("Bye. Hope to see you again soon!");
     }
+
 
     private static void printLogo() {
         String logo = " __  __ _ _       \n"
