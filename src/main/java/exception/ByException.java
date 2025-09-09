@@ -1,3 +1,5 @@
+package exception;
+
 public class ByException extends MiloException {
     public ByException(int type) {
         super(type == 1

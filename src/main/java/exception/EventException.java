@@ -1,3 +1,5 @@
+package exception;
+
 public class EventException extends MiloException {
     public EventException(int type) {
         super(type == 1
