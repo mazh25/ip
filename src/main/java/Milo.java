@@ -1,3 +1,4 @@
+import java.util.Objects;
 import java.util.Scanner;
 
 public class Milo {
@@ -110,53 +111,83 @@ public class Milo {
     }
 
     private static void todoTask(String command) {
-        String content = command.substring(5).trim();
-        tasks[count++] = new ToDos(content);
-        System.out.println("  ____________________________________________________________");
-        System.out.println(" Got it. I've added this task:");
-        System.out.println("   " + tasks[count-1].toString());
-        System.out.println(" Now you have "  + count + " tasks in the list.");
-        System.out.println("  ____________________________________________________________");
+        try {
+            if(command.length() < 5) {
+                throw new TodoException();
+            }
+            String content = command.substring(5).trim();
+            tasks[count++] = new ToDos(content);
+            System.out.println("  ____________________________________________________________");
+            System.out.println(" Got it. I've added this task:");
+            System.out.println("   " + tasks[count - 1].toString());
+            System.out.println(" Now you have " + count + " tasks in the list.");
+            System.out.println("  ____________________________________________________________");
+        } catch (MiloException e) {
+            System.out.println("    ____________________________________________________________");
+            System.out.println("     " + e.getMessage());
+            System.out.println("    ____________________________________________________________");
+        }
     }
 
     private static void deadlineTask(String command) {
-        String content = command.substring(9).trim();
-        String[] parts = content.split("/by", 2);
-        if (parts.length < 2) {
-            System.out.println("  Please provide a /by date for the deadline!");
-            return;
+        try {
+            if(command.length() < 9) {
+                throw new TodoException();
+            }
+            String content = command.substring(9).trim();
+            String[] parts = content.split("/by", 2);
+            System.out.printf("parts length: %d%n", parts.length);
+            if (parts.length < 2) {
+                throw new ByException(2);
+            }
+            if(parts[0].isEmpty()) throw new ByException(1);
+            if(parts[1].isEmpty()) throw new ByException(2);
+            String description = parts[0].trim();
+            String by = parts[1].trim();
+            tasks[count++] = new Deadline(description, by);
+            System.out.println("  ____________________________________________________________");
+            System.out.println(" Got it. I've added this task:");
+            System.out.println("   " + tasks[count - 1].toString());
+            System.out.println(" Now you have " + count + " tasks in the list.");
+            System.out.println("  ____________________________________________________________");
+        } catch (MiloException e) {
+            System.out.println("    ____________________________________________________________");
+            System.out.println("     " + e.getMessage());
+            System.out.println("    ____________________________________________________________");
         }
-        String description = parts[0].trim();
-        String by = parts[1].trim();
-        tasks[count++] = new Deadline(description, by);
-        System.out.println("  ____________________________________________________________");
-        System.out.println(" Got it. I've added this task:");
-        System.out.println("   " + tasks[count - 1].toString());
-        System.out.println(" Now you have " + count + " tasks in the list.");
-        System.out.println("  ____________________________________________________________");
     }
 
     private static void eventTask(String command) {
-        String content = command.substring(6).trim();
-        String[] parts = content.split("/from", 2);
-        if(parts.length < 2) {
-            System.out.println("  Please provide a /from time for the event!");
-            return;
+        try {
+            if(command.length() < 6) {
+                throw new TodoException();
+            }
+            String content = command.substring(6).trim();
+            String[] parts = content.split("/from", 2);
+            if (parts.length < 2) {
+                throw new EventException(2);
+            }
+            String description = parts[0].trim();
+            if(description.isEmpty()) throw new EventException(1);
+            String[] timeParts = parts[1].split("/to", 2);
+            if (timeParts.length < 2) {
+                throw new EventException(3);
+            }
+            String from = timeParts[0].trim();
+            if(from.isEmpty()) throw new EventException(2);
+            String to = timeParts[1].trim();
+            if(to.isEmpty()) throw new EventException(3);
+            tasks[count++] = new Events(description, from, to);
+            System.out.println("  ____________________________________________________________");
+            System.out.println(" Got it. I've added this task:");
+            System.out.println("   " + tasks[count - 1].toString());
+            System.out.println(" Now you have " + count + " tasks in the list.");
+            System.out.println("  ____________________________________________________________");
+        } catch (MiloException e) {
+            System.out.println("    ____________________________________________________________");
+            System.out.println("     " + e.getMessage());
+            System.out.println("    ____________________________________________________________");
         }
-        String description = parts[0].trim();
-        String[] timeParts = parts[1].split("/to", 2);
-        if(timeParts.length < 2) {
-            System.out.println("  Please provide a /to time for the event!");
-            return;
-        }
-        String from = timeParts[0].trim();
-        String to = timeParts[1].trim();
-        tasks[count++] = new Events(description, from, to);
-        System.out.println("  ____________________________________________________________");
-        System.out.println(" Got it. I've added this task:");
-        System.out.println("   " + tasks[count - 1].toString());
-        System.out.println(" Now you have " + count + " tasks in the list.");
-        System.out.println("  ____________________________________________________________");
     }
 }
 
