@@ -1,2 +1,5 @@
-package PACKAGE_NAME;public class MiloException {
+public class MiloException extends Exception{
+    public MiloException(String message) {
+        super(message);
+    }
 }
