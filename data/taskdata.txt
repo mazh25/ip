@@ -1,0 +1,3 @@
+T | 0 | have a meeting
+D | 1 | go to sleep | 9pm
+E | 0 | read a book | 9am | 10am
