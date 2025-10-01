@@ -11,13 +11,27 @@ import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Handles loading tasks from a file and saving tasks to a file.
+ */
 public class Storage {
     private String filePath;
 
+    /**
+     * Constructs a Storage object with the given file path.
+     *
+     * @param filePath the path to the file storing tasks
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Loads tasks from the file into an ArrayList.
+     *
+     * @return list of tasks loaded from file
+     * @throws FileNotFoundException if the file does not exist
+     */
     public ArrayList<Task> load() throws FileNotFoundException {
         ArrayList<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
@@ -59,6 +73,11 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves the list of tasks to the file.
+     *
+     * @param tasks list of tasks to save
+     */
     public void save(ArrayList<Task> tasks) {
         try {
             File file = new File(filePath);

@@ -5,11 +5,22 @@ import parser.Parser;
 import storage.Storage;
 import tasklist.TaskList;
 
+/**
+ * Main class for the Milo chatbot application.
+ * Handles initialization of storage, task list, and user interface,
+ * and runs the main loop to process user commands.
+ */
 public class Milo {
     private Storage storage;
     private TaskList tasks;
     private Ui ui;
 
+    /**
+     * Constructs a new Milo chatbot with the specified file path for task storage.
+     * Loads existing tasks from the file, or initializes an empty task list if loading fails.
+     *
+     * @param filePath The file path to load and save tasks.
+     */
     public Milo(String filePath) {
         ui = new Ui();
         storage = new Storage(filePath);
@@ -21,6 +32,10 @@ public class Milo {
         }
     }
 
+    /**
+     * Runs the main loop of the chatbot.
+     * Reads user input, parses it into commands, and executes them until the exit command is issued.
+     */
     public void run() {
         ui.showWelcome();
         boolean isExit = false;
@@ -40,6 +55,11 @@ public class Milo {
         }
     }
 
+    /**
+     * The main entry point for the application.
+     *
+     * @param args Command line arguments (not used).
+     */
     public static void main(String[] args) {
         new Milo("data/tasks.txt").run();
     }

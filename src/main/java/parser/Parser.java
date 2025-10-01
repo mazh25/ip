@@ -6,7 +6,19 @@ import task.Deadline;
 import task.Events;
 import task.ToDos;
 
+/**
+ * Parses user input strings and converts them into Command objects.
+ * Throws appropriate MiloException if input is invalid.
+ */
 public class Parser {
+
+    /**
+     * Parses a full command string into a specific Command object.
+     *
+     * @param fullCommand the input string from the user
+     * @return a Command object corresponding to the input
+     * @throws MiloException if the input is invalid or incomplete
+     */
     public static Command parse(String fullCommand) throws MiloException {
         String[] parts = fullCommand.split(" ", 2);
         String commandWord = parts[0].trim();
