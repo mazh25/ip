@@ -1,0 +1,4 @@
+T | 1 | asdf
+D | 1 | asdf | asdf
+E | 0 | asdfasdf | asdfas | asdf
+D | 0 | asdfadsf | 10
