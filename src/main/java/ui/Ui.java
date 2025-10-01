@@ -3,6 +3,7 @@ package ui;
 import task.Task;
 import tasklist.TaskList;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Ui {
@@ -72,6 +73,18 @@ public class Ui {
 
     public void showBye() {
         System.out.println("Bye. Hope to see you again soon!");
+    }
+
+    public void showFindResult(ArrayList<Task> tasks) {
+        if (tasks.isEmpty()) {
+            System.out.println(" No matching tasks found!");
+        } else {
+            System.out.println(" Here are the matching tasks in your list:");
+            for (int i = 0; i < tasks.size(); i++) {
+                System.out.println(" " + (i + 1) + "." + tasks.get(i));
+            }
+        }
+        showLine();
     }
 
 }

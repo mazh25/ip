@@ -22,6 +22,11 @@ public class Parser {
                 return new UnmarkCommand(Integer.parseInt(parts[1].trim()));
             case "delete":
                 return new DeleteCommand(Integer.parseInt(parts[1].trim()));
+            case "find":
+                if (parts.length < 2 || parts[1].trim().isEmpty()) {
+                    throw new TodoException();
+                }
+                return new FindCommand(parts[1].trim());
             case "todo":
                 if (parts.length < 2 || parts[1].trim().isEmpty()) {
                     throw new TodoException();
